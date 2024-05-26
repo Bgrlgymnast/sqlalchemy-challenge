@@ -16,7 +16,7 @@ In this section, you’ll use Python and SQLAlchemy to do a basic climate analys
 4. Link Python to the database by creating a SQLAlchemy session.
 
 ### IMPORTANT
-    Remember to close your session at the end of your notebook.
+- Remember to close your session at the end of your notebook.
 
 5. Perform a precipitation analysis and then a station analysis by completing the steps in the following two subsections.
 
@@ -40,19 +40,19 @@ In this section, you’ll use Python and SQLAlchemy to do a basic climate analys
 
 2. Design a query to find the most-active stations (that is, the stations that have the most rows). To do so, complete the following steps:
 
-    -List the stations and observation counts in descending order.
+- List the stations and observation counts in descending order.
 
-    -Answer the following question: which station id has the greatest number of observations?
+- Answer the following question: which station id has the greatest number of observations?
 
 3. Design a query that calculates the lowest, highest, and average temperatures that filters on the most-active station id found in the previous query.
 
 4. Design a query to get the previous 12 months of temperature observation (TOBS) data. To do so, complete the following steps:
 
-    -Filter by the station that has the greatest number of observations.
+- Filter by the station that has the greatest number of observations.
 
-    -Query the previous 12 months of TOBS data for that station.
+- Query the previous 12 months of TOBS data for that station.
 
-    -Plot the results as a histogram with bins=12, as the following image shows:
+- Plot the results as a histogram with bins=12, as the following image shows:
     
 5. Close your session.
 
@@ -61,38 +61,38 @@ Now that you’ve completed your initial analysis, you’ll design a Flask API b
 
 1. /
 
-    -Start at the homepage.
+- Start at the homepage.
 
-    -List all the available routes.
+- List all the available routes.
 
 2. /api/v1.0/precipitation
 
-    -Convert the query results from your precipitation analysis (i.e. retrieve only the last 12 months of data) to a dictionary using date as the key and prcp as the value.
+- Convert the query results from your precipitation analysis (i.e. retrieve only the last 12 months of data) to a dictionary using date as the key and prcp as the value.
 
-    -Return the JSON representation of your dictionary.
+- Return the JSON representation of your dictionary.
 
 3. /api/v1.0/stations
 
-    -Return a JSON list of stations from the dataset.
+- Return a JSON list of stations from the dataset.
 
 4. /api/v1.0/tobs
 
-    -Query the dates and temperature observations of the most-active station for the previous year of data.
+- Query the dates and temperature observations of the most-active station for the previous year of data.
 
-    -Return a JSON list of temperature observations for the previous year.
+- Return a JSON list of temperature observations for the previous year.
 
 5. /api/v1.0/<start> and /api/v1.0/<start>/<end>
 
-    -Return a JSON list of the minimum temperature, the average temperature, and the maximum temperature for a specified start or start-end range.
+- Return a JSON list of the minimum temperature, the average temperature, and the maximum temperature for a specified start or start-end range.
        
-     -For a specified start, calculate TMIN, TAVG, and TMAX for all the dates greater than or equal to the start date.
+- For a specified start, calculate TMIN, TAVG, and TMAX for all the dates greater than or equal to the start date.
 
-    -For a specified start date and end date, calculate TMIN, TAVG, and TMAX for the dates from the start date to the end date, inclusive.
+- For a specified start date and end date, calculate TMIN, TAVG, and TMAX for the dates from the start date to the end date, inclusive.
 
 ## Hints
-    -Join the station and measurement tables for some of the queries.
+- Join the station and measurement tables for some of the queries.
 
-    -Use the Flask jsonify function to convert your API data to a valid JSON response object.
+- Use the Flask jsonify function to convert your API data to a valid JSON response object.
 
 ## References
 Menne, M.J., I. Durre, R.S. Vose, B.E. Gleason, and T.G. Houston, 2012: An overview of the Global Historical Climatology Network-Daily Database. Journal of Atmospheric and Oceanic Technology, 29, 897-910, https://journals.ametsoc.org/view/journals/atot/29/7/jtech-d-11-00103_1.xmlLinks to an external site.
