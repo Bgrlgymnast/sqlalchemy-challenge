@@ -12,7 +12,7 @@ import datetime as dt
 # Database Setup
 #################################################
 
-engine = create_engine("sqlite:///../Resources/hawaii.sqlite")
+engine = create_engine("sqlite:///hawaii.sqlite")
 
 # reflect an existing database into a new model
 
@@ -20,7 +20,7 @@ Base = automap_base()
 
 # reflect the tables
 
-Base.prepare(autoload_with=engine)
+Base.prepare(autoload_with = engine)
 
 # Save references to each table
 Measurement = Base.classes.measurement
@@ -42,12 +42,11 @@ def home():
     #Set routes
     return (
             f"Welcome to Hawaii Precipitaion Analysis<br>"
-            f"/api/v1.0/Routes:<br>"
             f"/api/v1.0/precipitation<br>"
             f"/api/v1.0/stations<br>"
-            f"/api/v1.0/tobs<brs>"
-            f"/api/v1.0/<start><br>"
-            f"/api/v1.0/<start>/<end><br>"
+            f"/api/v1.0/tobs<br>"
+            f"/api/v1.0/start<br>"
+            f"/api/v1.0/start/end<br>"
 )
 
 #Returns json with the date as the key and the value as the precipitation.
@@ -63,11 +62,11 @@ def precipitation():
     results = session.query(Measurement.date, Measurement.prcp).filter(Measurement.date >= prior_year).all()
     session.close()
 
-    #create precipitaton dictionary
-    precip_dict = {}
+    #create precipitaton dictionarya
+    precip_dict = []
     for date, prcp in results:
-        precip_dict[date] = prcp
-        return jsonify(precip_dict)
+        precip_dict.append({date: prcp})
+    return jsonify(precip_dict)
 
 @app.route('/api/v1.0/stations')
 def stations():
@@ -82,7 +81,7 @@ def stations():
 def tobs():
     session = Session(engine)
     #Determine last 12 months for station USC00519281
-    prior_year = dt.date(2017, 8, 23) - dt.timedelta(days=365)
+    prior_year = dt.date(2017, 8, 18) - dt.timedelta(days=365)
 
     # Query the dates and temperature observations of the most-active (USC00519281) station for the previous year of data.
     results = session.query(Measurement.date, Measurement.tobs).filter(Measurement.station == 'USC00519281').filter(Measurement.date >= prior_year).all()
@@ -90,27 +89,34 @@ def tobs():
     all_tobs = list(np.ravel(results))
     return jsonify(all_tobs)
 
-@app.route('/api/v1.0/<start><br>')
-def start():
+@app.route('/api/v1.0/<start>')
+def start(start):
     session = Session(engine)
-    prior_year = dt.date(2017, 8, 23) - dt.timedelta(days=365)
+
+    #Define start
+    start = dt.datetime.strptime(start, '%Y-%m-%d').date()
 
     #Return a JSON list of the the min, max, and average temperatures calculated from the given start date to the end of the dataset.
-    results = session.query(func.min(Measurement.tobs), func.max(Measurement.tobs), func.avg(Measurement.tobs)).filter(Measurement.date >= dt.date(2016, 8, 23)).all()
+    results = session.query(Measurement.date, func.min(Measurement.tobs), func.max(Measurement.tobs), func.avg(Measurement.tobs)).\
+        filter(Measurement.date >= start).group_by(Measurement.date).all()
     session.close()
     min_avg_max_tobs = list(np.ravel(results))
     return jsonify(min_avg_max_tobs)
 
-@app.route('/api/v1.0/<start>/<end><br>')
-def start_end():
+@app.route('/api/v1.0/<start>/<end>')
+def start_end(end, start):
     session = Session(engine)
+  
+    #Define start and end 
+    start = dt.datetime.strptime(start, '%Y-%m-%d').date()
+    end = dt.datetime.strptime(start, '%Y-%m-%d').date()
+
     #Returns the min, max, and average temperatures calculated from the given start date to the given end date 
-    results = session.query(func.min(Measurement.tobs), func.max(Measurement.tobs), func.avg(Measurement.tobs)).\
-        filter(Measurement.date <= dt.date(2016, 8, 23)).filter(Measurement.date >= dt.date(2015, 8, 23)).all()
+    results = session.query(Measurement.date, func.min(Measurement.tobs), func.max(Measurement.tobs), func.avg(Measurement.tobs)).\
+        filter(Measurement.date >= start).filter(Measurement.date <= end).group_by(Measurement.date).all()
     session.close()
     start_end = list(np.ravel(results))
     return jsonify(start_end)
-
 
 if __name__ == '__main__':
     app.run(debug=True)
