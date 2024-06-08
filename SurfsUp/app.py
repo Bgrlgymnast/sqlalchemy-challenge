@@ -104,7 +104,7 @@ def start(start):
     return jsonify(min_avg_max_tobs)
 
 @app.route('/api/v1.0/<start>/<end>')
-def start_end(end, start):
+def start_end(start, end):
     session = Session(engine)
   
     #Define start and end 
