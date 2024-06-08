@@ -95,7 +95,9 @@ Now that you’ve completed your initial analysis, you’ll design a Flask API b
 - Use the Flask jsonify function to convert your API data to a valid JSON response object.
 
 ## References
-Menne, M.J., I. Durre, R.S. Vose, B.E. Gleason, and T.G. Houston, 2012: An overview of the Global Historical Climatology Network-Daily Database. Journal of Atmospheric and Oceanic Technology, 29, 897-910, https://journals.ametsoc.org/view/journals/atot/29/7/jtech-d-11-00103_1.xmlLinks to an external site.
+- Menne, M.J., I. Durre, R.S. Vose, B.E. Gleason, and T.G. Houston, 2012: An overview of the Global Historical Climatology Network-Daily Database. Journal of Atmospheric and Oceanic Technology, 29, 897-910, https://journals.ametsoc.org/view/journals/atot/29/7/jtech-d-11-00103_1.xmlLinks to an external site.
+
+- Received assistance from classmates and TA.
 
 ## Copyright 
 © 2024 edX Boot Camps LLC
